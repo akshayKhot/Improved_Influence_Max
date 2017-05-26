@@ -14,13 +14,15 @@ public class Main {
         InfluenceMax_list list = new InfluenceMax_list(graphName, probability);
         list.get_sketch();
         estimatedTime1 = System.currentTimeMillis() - startTime1;
-        System.out.println("Time taken by List implementation: " + estimatedTime1 / 1000.0 + "seconds");
+        System.out.println("\nTime taken by List implementation: " + estimatedTime1 / 1000.0 + " seconds");
+
+        System.out.println("------------------------------------------------------------------");
 
         startTime2 = System.currentTimeMillis();
         InfluenceMax_flat flat = new InfluenceMax_flat(graphName, probability);
         flat.get_sketch();
         estimatedTime2 = System.currentTimeMillis() - startTime2;
-        System.out.println("Time taken by Flat implementation: " + estimatedTime2 / 1000.0 + "seconds");
+        System.out.println("\nTime taken by Flat implementation: " + estimatedTime2 / 1000.0 + " seconds");
 
 
     }

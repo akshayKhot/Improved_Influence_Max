@@ -28,7 +28,7 @@ public class InfluenceMax_flat {
 		n = G.numNodes();
 		m = G.numArcs();
         k = 5;
-        System.out.println("n="+n + ", m=" +m  + ", W=" +( 2 * (n+m)*Math.log(n)  ));
+        System.out.println("\nn="+n + ", m=" +m  + ", W=" +( 2 * (n+m)*Math.log(n)  ));
 
 		
 		marked = new BitSet(n);
@@ -51,23 +51,18 @@ public class InfluenceMax_flat {
         	permutation[i-1] = permutation[j];
         	permutation[j] = temp;
         }
-        System.out.println("Permutation array shuffled.");
-        
-        System.out.println("Initializing index I...");
+
         for(int i=0;i<nMAX;i++)
         {
             sketches[i] = -1;
             nodes[i] = -1;
         }
-        
-        System.out.println("index I initialized.");
-        
-        
+
         this.p = p;
 	}
     
 	
-	void get_sketch() {
+	public void get_sketch() {
         double W = 2 * (n + m) * Math.log(n);
                            
 	    double weight_of_current_index = 0.0;
@@ -80,19 +75,6 @@ public class InfluenceMax_flat {
 
 	    while(weight_of_current_index < W)
 	    {
-	    	if(index % 100000 == 0) {
-	    		double sofarTimeInMin = (System.currentTimeMillis() - startTime)/(1000.0 * 60);
-	    		double pctDone = 100*weight_of_current_index/W;
-	    		
-	    		System.out.println(
-                        "sketch=" + sketch_num + 
-	    				",  index=" + index +
-	    				", weight_of_current_index=" + weight_of_current_index + 
-	    				", this is " + pctDone + "% of W" +
-	    				", elapsed " + sofarTimeInMin + " min");
- 
-	    	}
-	        
 	    	int v = permutation[gen_rnd.nextInt(n)];
 	        marked.clear();
 	        BFS(v,marked);
@@ -113,12 +95,10 @@ public class InfluenceMax_flat {
             sketch_num++;
             count_sketches += marked.cardinality();
 	    }
-        
-        System.out.println();
+
 	    System.out.println("Index: " + index +
                            ", Number of Sketches: " + sketch_num +
                            ", Size of array iSketch: " + count_sketches);
-        System.out.println();
         
         // Cutting off the tails of sketches and nodes arrays, making the arrays shorter
         int[] iSketch = new int[count_sketches + 1];
@@ -182,10 +162,8 @@ public class InfluenceMax_flat {
         
         total_infl = set_infl + infl_max;
 
-        System.out.println();
         System.out.println("Max Node = " + max_node +
                            ", Maximum Influence = " + total_infl);
-        System.out.println();
 
         if((k - 1)==0)
             return;
