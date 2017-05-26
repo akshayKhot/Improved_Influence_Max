@@ -1,8 +1,4 @@
-import java.util.ArrayDeque;
-import java.util.BitSet;
-import java.util.Deque;
 import java.util.Random;
-import it.unimi.dsi.webgraph.ImmutableGraph;
 
 public class InfluenceMax_flat extends InfluenceMax {
 
@@ -11,7 +7,7 @@ public class InfluenceMax_flat extends InfluenceMax {
     int[] nodes;
     int[] node_infl;
 
-    int count_sketches; // the length of sketches and nodes arrays
+    int count_sketches;
 	
 	public InfluenceMax_flat(String basename, int beta) throws Exception {
 		super(basename, beta);
@@ -25,15 +21,13 @@ public class InfluenceMax_flat extends InfluenceMax {
             nodes[i] = -1;
         }
 	}
-    
-	
+
 	public void get_sketch() {
                            
 	    double weight_of_current_index = 0.0;
 	    int index = 0;
         int sketch_num = 0;
 
-	    long startTime = System.currentTimeMillis();
         count_sketches = 0;
         Random gen_rnd = new Random();
 
@@ -48,7 +42,7 @@ public class InfluenceMax_flat extends InfluenceMax {
 	        for (int u = marked.nextSetBit(0); u >= 0; u = marked.nextSetBit(u+1))
 	        {
                 sketches[count_sketches + iteration] = sketch_num;
-                nodes[count_sketches + iteration]  = u;
+                nodes[count_sketches + iteration] = u;
                 node_infl[u] = node_infl[u] + 1;
                 iteration = iteration++;
 	            total_out_degree += G.outdegree(u);
@@ -100,8 +94,7 @@ public class InfluenceMax_flat extends InfluenceMax {
         
         total_infl = set_infl + infl_max;
 
-        System.out.println("Max Node = " + max_node +
-                           ", Maximum Influence = " + total_infl);
+        System.out.println("Max Node = " + max_node + ", Maximum Influence = " + total_infl);
 
         if((k - 1)==0)
             return;

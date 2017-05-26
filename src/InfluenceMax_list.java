@@ -1,32 +1,23 @@
-import java.util.ArrayDeque;
-import java.util.BitSet;
-import java.util.Deque;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
-import it.unimi.dsi.webgraph.ImmutableGraph;
 
 public class InfluenceMax_list extends InfluenceMax{
 	
 	public InfluenceMax_list(String basename, int beta) throws Exception {
         super(basename, beta);
 	}
-    
-	
+
 	public void get_sketch() {
 
-        List<List<Integer>> I = new ArrayList<List<Integer>>();
+        List<List<Integer>> I = new ArrayList<>();
         for(int j=0;j<n;j++)
-        {
-            I.add(new ArrayList<Integer>());
-        }
+            I.add(new ArrayList<>());
                            
 	    double weight_of_current_index = 0.0;
 	    int index = 0;
         int sketch_num = 0;
 
-	    long startTime = System.currentTimeMillis();
-        
         Random gen_rnd = new Random();
 
 	    while(weight_of_current_index < W)
@@ -34,8 +25,7 @@ public class InfluenceMax_list extends InfluenceMax{
 	    	int v = permutation[gen_rnd.nextInt(n)];
 	        marked.clear();
 	        BFS(v,marked);
-            
-            int j=0;
+
 	        int total_out_degree = 0;
 	        for (int u = marked.nextSetBit(0); u >= 0; u = marked.nextSetBit(u+1))
 	        {
@@ -43,7 +33,7 @@ public class InfluenceMax_list extends InfluenceMax{
 	            total_out_degree += G.outdegree(u);
 	        }
 	        weight_of_current_index += (marked.cardinality() + total_out_degree);
-	        index = ( index + 1 ) % n;
+	        index = (index+1) % n;
             sketch_num++;
 	    }
 
@@ -61,7 +51,6 @@ public class InfluenceMax_list extends InfluenceMax{
         int node_sketch = 1;
         int total_infl = 0;
 
-        
         for(int v=0;v<n;v++)
         {
             if(I.get(v).size() < node_sketch)
@@ -76,11 +65,9 @@ public class InfluenceMax_list extends InfluenceMax{
 
         total_infl = set_infl + infl_max;
 
-        System.out.println(
-                           "Max Node = " + max_node +
-                           ", Maximum Influence = " + total_infl);
+        System.out.println("Max Node = " + max_node + ", Maximum Influence = " + total_infl);
 
-        if((k - 1)==0)
+        if((k-1)==0)
             return;
 
         for(int u=0;u<n;u++) {
