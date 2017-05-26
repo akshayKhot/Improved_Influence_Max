@@ -177,19 +177,5 @@ public class InfluenceMax_list {
     }
 	
 		
-	public static void main(String[] args) throws Exception {
-		long startTime = System.currentTimeMillis();
-		long estimatedTime;
 
-		args = new String[] {"sym-noself/cnr-2000-t", "0.1"};
-		
-		String basename  = args[0];
-		double p = Double.valueOf(args[1]);
-		
-		InfluenceMax_list iml = new InfluenceMax_list(basename, p);
-		iml.get_sketch();
-			
-		estimatedTime = System.currentTimeMillis() - startTime;
-		System.out.println("Time elapsed = " + estimatedTime / 1000.0 + " sec");	
-	}
 }

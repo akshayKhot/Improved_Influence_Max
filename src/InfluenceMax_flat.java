@@ -231,20 +231,5 @@ public class InfluenceMax_flat {
     }
 
 		
-	public static void main(String[] args) throws Exception {
-		long startTime = System.currentTimeMillis();
-		long estimatedTime;
 
-		args = new String[] {"sym-noself/cnr-2000-t", "0.1"};
-
-		
-		String basename  = args[0];
-		double p = Double.valueOf(args[1]);
-		
-        InfluenceMax_flat imfl = new InfluenceMax_flat(basename, p);
-		imfl.get_sketch();
-			
-		estimatedTime = System.currentTimeMillis() - startTime;
-		System.out.println("Time elapsed = " + estimatedTime /(1000.0) + " sec");
-	}
 }
