@@ -76,32 +76,6 @@ public class InfluenceMax_flat extends InfluenceMax {
         int set_infl = 0;
         get_seeds(iSketch, iNode, node_infl, k, count_sketches, sketch_num, set_infl);
 	}
-		
-	void BFS(int v, BitSet marked) {
-		
-		Random random = new Random();
-		
-		Deque<Integer> queue = new ArrayDeque<Integer>();
-
-		queue.add(v);
-        marked.set(v);
-                
-        while (!queue.isEmpty()) {
-            int u = queue.remove();
-            int[] u_neighbors = G.successorArray(u);
-            int u_deg = G.outdegree(u);
-        
-            for (int ni = 0; ni < u_deg; ni++) {
-                int uu = u_neighbors[ni];
-                double xi = random.nextDouble();
-                
-                if (!marked.get(uu) && xi < p) {
-                    queue.add(uu);
-                    marked.set(uu);
-                }
-            }
-        }
-	}
     
     void get_seeds(int[] sketch_I, int[] node_I, int[] node_infl, int k, int count_sketches, int sketch_num, int set_infl) {
 
