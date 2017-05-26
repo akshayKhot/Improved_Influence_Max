@@ -8,31 +8,32 @@ public class InfluenceMax_flat {
 	ImmutableGraph G;
 	int n;
 	long m;
-	double eps = .1;
-    double p;
-    int k;
-    int nMAX = 10000000;
-    
+	double W;
+
+    double p = 0.1;
+    int beta = 2;
+    int k = 5;
+
     int[] permutation;
     BitSet marked;
 
+    int nMAX = 10000000;
     int[] sketches;
     int[] nodes;
     int[] node_infl;
 
     int count_sketches; // the length of sketches and nodes arrays
 	
-	public InfluenceMax_flat(String basename, Double  p) throws Exception {
+	public InfluenceMax_flat(String basename) throws Exception {
 		G = ImmutableGraph.load(basename);
 		
 		n = G.numNodes();
 		m = G.numArcs();
-        k = 5;
-        System.out.println("\nn="+n + ", m=" +m  + ", W=" +( 2 * (n+m)*Math.log(n)  ));
+		W = beta * (n + m) * Math.log(n);
+        System.out.println("\nn="+ n + ", m=" + m );
 
 		
 		marked = new BitSet(n);
-		
 		permutation = new int[n];
 
         sketches = new int[nMAX];
@@ -57,13 +58,10 @@ public class InfluenceMax_flat {
             sketches[i] = -1;
             nodes[i] = -1;
         }
-
-        this.p = p;
 	}
     
 	
 	public void get_sketch() {
-        double W = 2 * (n + m) * Math.log(n);
                            
 	    double weight_of_current_index = 0.0;
 	    int index = 0;

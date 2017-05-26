@@ -10,22 +10,25 @@ public class InfluenceMax_list {
 	ImmutableGraph G;
 	int n;
 	long m;
-	double eps = .1;
-    double p;
+	double W;
+
+	double p = 0.1;
+    int beta = 2;
     int k = 5;
     
     int[] permutation;
     BitSet marked;
 	
-	public InfluenceMax_list(String basename, Double  p) throws Exception {
-		G = ImmutableGraph.load(basename);
-		
+	public InfluenceMax_list(String basename) throws Exception {
+
+	    G = ImmutableGraph.load(basename);
 		n = G.numNodes();
 		m = G.numArcs();
-        System.out.println("\nn="+n + ", m=" +m  + ", W=" +( 2 * (n+m)*Math.log(n)  ));
+        W = beta * (n + m) * Math.log(n);
+
+        System.out.println("\nn="+ n + ", m=" + m);
 		
 		marked = new BitSet(n);
-		
 		permutation = new int[n];
 
 		for(int i=0; i<n; i++)
@@ -39,15 +42,11 @@ public class InfluenceMax_list {
         	permutation[i-1] = permutation[j];
         	permutation[j] = temp;
         }
-        
-        this.p = p;
 	}
     
 	
 	public void get_sketch() {
-        double W = 2 * (n + m) * Math.log(n);
 
-        
         List<List<Integer>> I = new ArrayList<List<Integer>>();
         for(int j=0;j<n;j++)
         {
@@ -80,8 +79,7 @@ public class InfluenceMax_list {
             sketch_num++;
 	    }
 
-	    System.out.println("Index: " + index +
-                           " Number of Sketches: " + sketch_num);
+	    System.out.println("Index: " + index + " Number of Sketches: " + sketch_num);
 
         System.gc();
         int set_infl = 0;
