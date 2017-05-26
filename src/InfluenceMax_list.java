@@ -4,8 +4,6 @@ import java.util.Deque;
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
-
-
 import it.unimi.dsi.webgraph.ImmutableGraph;
 
 public class InfluenceMax_list {
@@ -13,8 +11,8 @@ public class InfluenceMax_list {
 	int n;
 	long m;
 	double eps = .1;
-    double p; // given probability of arc existence
-    int k = 5; // given number of maximum influence nodes
+    double p;
+    int k = 5;
     
     int[] permutation;
     BitSet marked;
@@ -24,21 +22,16 @@ public class InfluenceMax_list {
 		
 		n = G.numNodes();
 		m = G.numArcs();
-		//System.out.println("n="+n + ", m=" +m  + ", W=" +( (1/Math.pow(eps, 3)) * (n+m)*Math.log(n)  ));
         System.out.println("n="+n + ", m=" +m  + ", W=" +( 2 * (n+m)*Math.log(n)  ));
 		
 		marked = new BitSet(n);
 		
 		permutation = new int[n];
-        
-//		System.out.println("Initializing the permutation array...");
+
 		for(int i=0; i<n; i++)
 			permutation[i] = i;
-//		System.out.println("Permutation array initialized.");
-		
-//		System.out.println("Shuffling the permutation array...");
+
 		Random rnd = new Random();
-		// Shuffle array
         for (int i=n; i>1; i--) {
         	int j = rnd.nextInt(i);
         	//swap
@@ -54,7 +47,6 @@ public class InfluenceMax_list {
     
 	
 	void get_sketch() {
-	    //double W = (1/Math.pow(eps, 3)) * (n + m) * Math.log(n);
         double W = 2 * (n + m) * Math.log(n);
 
         
@@ -107,13 +99,7 @@ public class InfluenceMax_list {
 	    System.out.println("Index: " + index +
                            " Number of Sketches: " + sketch_num);
         System.out.println();
-        
-/*        for(int j=0;j<25;j++)
-        {
-            System.out.println(I.get(j));
-            System.out.println();
-        }
- */
+
         System.gc();
         int set_infl = 0;
         get_seeds(I, k, sketch_num, set_infl);
@@ -173,14 +159,10 @@ public class InfluenceMax_list {
                            "Max Node = " + max_node +
                            ", Maximum Influence = " + total_infl);
         System.out.println();
-        
-        // Stopping condition: no need to re-calculate the influence, if we already got the k seeds
+
         if((k - 1)==0)
             return;
-        
-        // Re-calculating the influence of the remaining nodes: remove max node and the sketches it participated in
-        // plus re-calculate the influence
-        
+
         for(int u=0;u<n;u++) {
             if((I.get(u).size() < node_sketch) || (u == max_node))
                 continue;
@@ -199,10 +181,7 @@ public class InfluenceMax_list {
 		long startTime = System.currentTimeMillis();
 		long estimatedTime;
 
-		//args = new String[] {"edges02", "0.2"};
 		args = new String[] {"sym-noself/cnr-2000-t", "0.1"};
-        //args = new String[] {"uk100Tnoself", "0.1"};
-
 		
 		String basename  = args[0];
 		double p = Double.valueOf(args[1]);

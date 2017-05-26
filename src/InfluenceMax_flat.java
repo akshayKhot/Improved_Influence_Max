@@ -2,9 +2,6 @@ import java.util.ArrayDeque;
 import java.util.BitSet;
 import java.util.Deque;
 import java.util.Random;
-
-import java.util.Arrays;
-
 import it.unimi.dsi.webgraph.ImmutableGraph;
 
 public class InfluenceMax_flat {
@@ -12,16 +9,13 @@ public class InfluenceMax_flat {
 	int n;
 	long m;
 	double eps = .1;
-    double p; // given probability of arc existence
-    int k; // given number of maximum influence nodes
+    double p;
+    int k;
     int nMAX = 10000000;
     
     int[] permutation;
     BitSet marked;
-    
-    // Flat arrays to keep: sketches - all sketch numbers in order, like 0000...1111...2222...;
-    //                      nodes - all corresponding node IDs participating in sketch, like 13 17 100 230 ... 13 23 300 10000 ...
-    //                      node_infl - counts of sketches the node is participating into;
+
     int[] sketches;
     int[] nodes;
     int[] node_infl;
@@ -34,28 +28,22 @@ public class InfluenceMax_flat {
 		n = G.numNodes();
 		m = G.numArcs();
         k = 5;
-		//System.out.println("n="+n + ", m=" +m  + ", W=" +( (1/Math.pow(eps, 3)) * (n+m)*Math.log(n)  ));
         System.out.println("n="+n + ", m=" +m  + ", W=" +( 2 * (n+m)*Math.log(n)  ));
 
 		
 		marked = new BitSet(n);
 		
 		permutation = new int[n];
-        
-        // Flat arrays created: sketches and nodes are very large, nMAX equals one billion
-        //                      node_infl - the size is n (the number of nodes)
+
         sketches = new int[nMAX];
         nodes = new int[nMAX];
         node_infl = new int[n];
-        
-//		System.out.println("Initializing the permutation array...");
+
 		for(int i=0; i<n; i++)
 			permutation[i] = i;
-//		System.out.println("Permutation array initialized.");
-		
-//		System.out.println("Shuffling the permutation array...");
+
 		Random rnd = new Random();
-		// Shuffle array
+
         for (int i=n; i>1; i--) {
         	int j = rnd.nextInt(i);
         	//swap
@@ -80,7 +68,6 @@ public class InfluenceMax_flat {
     
 	
 	void get_sketch() {
-	    //double W = (1/Math.pow(eps, 3)) * (n + m) * Math.log(n);
         double W = 2 * (n + m) * Math.log(n);
                            
 	    double weight_of_current_index = 0.0;
@@ -174,7 +161,6 @@ public class InfluenceMax_flat {
     
     void get_seeds(int[] sketch_I, int[] node_I, int[] node_infl, int k, int count_sketches, int sketch_num, int set_infl) {
 
-        // Calculating the node with max influence
         int infl_max = 0;
         int max_node = 0;
         int node_number = 1;
@@ -200,8 +186,7 @@ public class InfluenceMax_flat {
         System.out.println("Max Node = " + max_node +
                            ", Maximum Influence = " + total_infl);
         System.out.println();
-        
-        // Stopping condition: no need to re-calculate the influence, if we already got the k seeds
+
         if((k - 1)==0)
             return;
         
@@ -250,9 +235,7 @@ public class InfluenceMax_flat {
 		long startTime = System.currentTimeMillis();
 		long estimatedTime;
 
-		//args = new String[] {"edges02", "0.2"};
 		args = new String[] {"sym-noself/cnr-2000-t", "0.1"};
-        //args = new String[] {"uk100Tnoself", "0.1"};
 
 		
 		String basename  = args[0];
