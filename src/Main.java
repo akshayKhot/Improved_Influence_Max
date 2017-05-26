@@ -7,7 +7,7 @@ public class Main {
 
         long startTime1, startTime2, estimatedTime1, estimatedTime2;
 
-        String graphName = "sym-noself/cnr-2000-t";
+        String graphName = "cnr-2000-t";
 
         startTime1 = System.currentTimeMillis();
         InfluenceMax_list list = new InfluenceMax_list(graphName);

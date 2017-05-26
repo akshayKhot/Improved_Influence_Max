@@ -21,13 +21,14 @@ public class InfluenceMax_list {
 	
 	public InfluenceMax_list(String basename) throws Exception {
 
-	    G = ImmutableGraph.load(basename);
+	    G = ImmutableGraph.load("sym-noself/" + basename);
 		n = G.numNodes();
 		m = G.numArcs();
         W = beta * (n + m) * Math.log(n);
 
-        System.out.println("\nn="+ n + ", m=" + m);
-		
+        System.out.println("\nG = " + basename + "\nn = "+ n + ", m = " + m);
+        System.out.println("Beta=" + beta + " k=" + k + " p=" + p + "\n");
+
 		marked = new BitSet(n);
 		permutation = new int[n];
 
@@ -37,7 +38,6 @@ public class InfluenceMax_list {
 		Random rnd = new Random();
         for (int i=n; i>1; i--) {
         	int j = rnd.nextInt(i);
-        	//swap
         	int temp = permutation[i-1];
         	permutation[i-1] = permutation[j];
         	permutation[j] = temp;

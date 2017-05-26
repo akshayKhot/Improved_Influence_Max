@@ -25,34 +25,32 @@ public class InfluenceMax_flat {
     int count_sketches; // the length of sketches and nodes arrays
 	
 	public InfluenceMax_flat(String basename) throws Exception {
-		G = ImmutableGraph.load(basename);
-		
+
+		G = ImmutableGraph.load("sym-noself/" + basename);
 		n = G.numNodes();
 		m = G.numArcs();
 		W = beta * (n + m) * Math.log(n);
-        System.out.println("\nn="+ n + ", m=" + m );
 
-		
-		marked = new BitSet(n);
+		System.out.println("\nG = " + basename + "\nn = "+ n + ", m = " + m);
+        System.out.println("Beta=" + beta + " k=" + k + " p=" + p + "\n");
+
+        marked = new BitSet(n);
 		permutation = new int[n];
-
-        sketches = new int[nMAX];
-        nodes = new int[nMAX];
-        node_infl = new int[n];
 
 		for(int i=0; i<n; i++)
 			permutation[i] = i;
 
 		Random rnd = new Random();
-
         for (int i=n; i>1; i--) {
         	int j = rnd.nextInt(i);
-        	//swap
         	int temp = permutation[i-1];
         	permutation[i-1] = permutation[j];
         	permutation[j] = temp;
         }
 
+        sketches = new int[nMAX];
+        nodes = new int[nMAX];
+        node_infl = new int[n];
         for(int i=0;i<nMAX;i++)
         {
             sketches[i] = -1;
