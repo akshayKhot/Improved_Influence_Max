@@ -11,7 +11,6 @@ public class InfluenceMax_flat {
 	double W;
 
     double p = 0.1;
-    int beta = 2;
     int k = 5;
 
     int[] permutation;
@@ -24,7 +23,7 @@ public class InfluenceMax_flat {
 
     int count_sketches; // the length of sketches and nodes arrays
 	
-	public InfluenceMax_flat(String basename) throws Exception {
+	public InfluenceMax_flat(String basename, int beta) throws Exception {
 
 		G = ImmutableGraph.load("sym-noself/" + basename);
 		n = G.numNodes();

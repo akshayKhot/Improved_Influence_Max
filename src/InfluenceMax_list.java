@@ -13,13 +13,12 @@ public class InfluenceMax_list {
 	double W;
 
 	double p = 0.1;
-    int beta = 2;
     int k = 5;
     
     int[] permutation;
     BitSet marked;
 	
-	public InfluenceMax_list(String basename) throws Exception {
+	public InfluenceMax_list(String basename, int beta) throws Exception {
 
 	    G = ImmutableGraph.load("sym-noself/" + basename);
 		n = G.numNodes();
