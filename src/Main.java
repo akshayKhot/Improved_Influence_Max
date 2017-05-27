@@ -4,27 +4,26 @@ public class Main {
     public static void main(String args[]) throws Exception {
 
         long startTime1, startTime2, estimatedTime1, estimatedTime2;
-        int beta = 2;
+        int[] betas = {2, 4};
 
         String graphName = "cnr-2000-t";
 
-        startTime1 = System.currentTimeMillis();
-        InfluenceMax_list list = new InfluenceMax_list(graphName, beta);
-        list.get_sketch();
-        estimatedTime1 = System.currentTimeMillis() - startTime1;
+
+        for(int b : betas) {
+            startTime1 = System.currentTimeMillis();
+            new InfluenceMax_list(graphName, b);
+            estimatedTime1 = System.currentTimeMillis() - startTime1;
+            System.out.println("Time taken by List implementation: " + estimatedTime1 / 1000.0 + " seconds");
+        }
 
         System.out.println("------------------------------------------------------------------");
 
-        startTime2 = System.currentTimeMillis();
-        InfluenceMax_flat flat = new InfluenceMax_flat(graphName, beta);
-        flat.get_sketch();
-        estimatedTime2 = System.currentTimeMillis() - startTime2;
-
-        System.out.println("------------------------------------------------------------------");
-
-        System.out.println("Time taken by List implementation: " + estimatedTime1 / 1000.0 + " seconds");
-        System.out.println("Time taken by Flat implementation: " + estimatedTime2 / 1000.0 + " seconds");
-
+        for(int b : betas) {
+            startTime2 = System.currentTimeMillis();
+            new InfluenceMax_flat(graphName, b);
+            estimatedTime2 = System.currentTimeMillis() - startTime2;
+            System.out.println("Time taken by Flat implementation: " + estimatedTime2 / 1000.0 + " seconds");
+        }
 
     }
 

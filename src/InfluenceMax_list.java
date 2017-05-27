@@ -6,6 +6,7 @@ public class InfluenceMax_list extends InfluenceMax{
 	
 	public InfluenceMax_list(String basename, int beta) throws Exception {
         super(basename, beta);
+        get_sketch();
 	}
 
 	public void get_sketch() {

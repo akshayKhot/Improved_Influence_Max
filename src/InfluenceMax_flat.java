@@ -20,6 +20,8 @@ public class InfluenceMax_flat extends InfluenceMax {
             sketches[i] = -1;
             nodes[i] = -1;
         }
+
+        get_sketch();
 	}
 
 	public void get_sketch() {
