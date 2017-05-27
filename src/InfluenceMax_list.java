@@ -48,16 +48,16 @@ public class InfluenceMax_list extends InfluenceMax{
 
         int infl_max = 0;
         int max_node = 0;
-        int node_sketch = 1;
         int total_infl = 0;
 
         for(int v=0;v<n;v++)
         {
-            if(I.get(v).size() < node_sketch)
+            if(I.get(v).size() < 1)
                 continue;
             else {
-                if(I.get(v).size() * n/sketch_num > infl_max) {
-                    infl_max = I.get(v).size() * n/sketch_num;
+                int temp = I.get(v).size() * n/sketch_num;
+                if(temp > infl_max) {
+                    infl_max = temp;
                     max_node = v;
                 }
             }
@@ -65,13 +65,15 @@ public class InfluenceMax_list extends InfluenceMax{
 
         total_infl = set_infl + infl_max;
 
-        System.out.println("Max Node = " + max_node + ", Maximum Influence = " + total_infl);
+        System.out.println("Max Node = " + max_node + ", Its Influence = " + infl_max);
 
-        if((k-1)==0)
+        if((k - 1)==0) {
+            System.out.println("Total Influence of " + this.k + " nodes = " + total_infl);
             return;
+        }
 
         for(int u=0;u<n;u++) {
-            if((I.get(u).size() < node_sketch) || (u == max_node))
+            if((I.get(u).size() < 1) || (u == max_node))
                 continue;
             else
             {
