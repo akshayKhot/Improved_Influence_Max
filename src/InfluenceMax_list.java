@@ -10,6 +10,8 @@ public class InfluenceMax_list extends InfluenceMax{
 
 	public void get_sketch() {
 
+	    long sketchStartTime = System.currentTimeMillis();
+
         List<List<Integer>> I = new ArrayList<>();
         for(int j=0;j<n;j++)
             I.add(new ArrayList<>());
@@ -37,11 +39,20 @@ public class InfluenceMax_list extends InfluenceMax{
             sketch_num++;
 	    }
 
-	    System.out.println("Index: " + index + " Number of Sketches: " + sketch_num);
+	    long sketchEndTime = System.currentTimeMillis() - sketchStartTime;
 
+
+	    System.out.println("Index: " + index + " Number of Sketches: " + sketch_num);
         System.gc();
+
         int set_infl = 0;
+
+        long seedStartTime = System.currentTimeMillis();
         get_seeds(I, k, sketch_num, set_infl);
+        long seedEndTime = System.currentTimeMillis() - seedStartTime;
+
+        System.out.println("\tTime taken to get sketches: " + sketchEndTime/1000.0 + " seconds");
+        System.out.println("\tTime taken to compute seeds: " + seedEndTime/1000.0 + " seconds");
 	}
     
     void get_seeds(List<List<Integer>> I, int k, int sketch_num, int set_infl) {
@@ -68,17 +79,16 @@ public class InfluenceMax_list extends InfluenceMax{
         System.out.println("Max Node = " + max_node + ", Its Influence = " + infl_max);
 
         if((k - 1)==0) {
-            System.out.println("Total Influence of " + this.k + " nodes = " + total_infl);
+            System.out.println("Total Influence of " + this.k + " nodes = " + total_infl + "\n");
             return;
         }
 
+        List<Integer> nodes_in_max_node = I.get(max_node);
         for(int u=0;u<n;u++) {
             if((I.get(u).size() < 1) || (u == max_node))
                 continue;
             else
-            {
-                I.get(u).removeAll(I.get(max_node));
-            }
+                I.get(u).removeAll(nodes_in_max_node);
         }
         I.get(max_node).clear();
         

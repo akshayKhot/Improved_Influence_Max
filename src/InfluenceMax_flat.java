@@ -23,7 +23,9 @@ public class InfluenceMax_flat extends InfluenceMax {
 	}
 
 	public void get_sketch() {
-                           
+
+        long sketchStartTime = System.currentTimeMillis();
+
 	    double weight_of_current_index = 0.0;
 	    int index = 0;
         int sketch_num = 0;
@@ -31,8 +33,7 @@ public class InfluenceMax_flat extends InfluenceMax {
         count_sketches = 0;
         Random gen_rnd = new Random();
 
-	    while(weight_of_current_index < W)
-	    {
+	    while(weight_of_current_index < W) {
 	    	int v = permutation[gen_rnd.nextInt(n)];
 	        marked.clear();
 	        BFS(v,marked);
@@ -64,11 +65,19 @@ public class InfluenceMax_flat extends InfluenceMax {
         
         int[] iNode = new int[count_sketches + 1];
         System.arraycopy(nodes,0,iNode,0,count_sketches);
-        
+
+        long sketchEndTime = System.currentTimeMillis() - sketchStartTime;
+
         System.gc();
         
         int set_infl = 0;
+
+        long seedStartTime = System.currentTimeMillis();
         get_seeds(iSketch, iNode, node_infl, k, count_sketches, sketch_num, set_infl);
+        long seedEndTime = System.currentTimeMillis() - seedStartTime;
+
+        System.out.println("\tTime taken to get sketches: " + sketchEndTime/1000.0 + " seconds");
+        System.out.println("\tTime taken to compute seeds: " + seedEndTime/1000.0 + " seconds");
 	}
     
     void get_seeds(int[] sketch_I, int[] node_I, int[] node_infl, int k, int count_sketches, int sketch_num, int set_infl) {
@@ -97,7 +106,7 @@ public class InfluenceMax_flat extends InfluenceMax {
         System.out.println("Max Node = " + max_node + ", Its Influence = " + infl_max);
 
         if((k - 1)==0) {
-            System.out.println("Total Influence of " + this.k + " nodes = " + total_infl);
+            System.out.println("Total Influence of " + this.k + " nodes = " + total_infl + "\n");
             return;
         }
         
