@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class InfluenceMax_list extends InfluenceMax{
-	
+
 	public InfluenceMax_list(String basename, int beta) throws Exception {
         super(basename, beta);
         get_sketch();
@@ -16,7 +16,7 @@ public class InfluenceMax_list extends InfluenceMax{
         List<List<Integer>> I = new ArrayList<>();
         for(int j=0;j<n;j++)
             I.add(new ArrayList<>());
-                           
+
 	    double weight_of_current_index = 0.0;
 	    int index = 0;
         int sketch_num = 0;
@@ -55,7 +55,7 @@ public class InfluenceMax_list extends InfluenceMax{
         System.out.println("\tTime taken to get sketches: " + sketchEndTime/1000.0 + " seconds");
         System.out.println("\tTime taken to compute seeds: " + seedEndTime/1000.0 + " seconds");
 	}
-    
+
     void get_seeds(List<List<Integer>> I, int k, int sketch_num, int set_infl) {
 
         int infl_max = 0;
@@ -67,7 +67,7 @@ public class InfluenceMax_list extends InfluenceMax{
             if(I.get(v).size() < 1)
                 continue;
             else {
-                int temp = I.get(v).size() * n/sketch_num;
+                int temp = I.get(v).size();
                 if(temp > infl_max) {
                     infl_max = temp;
                     max_node = v;
@@ -75,6 +75,7 @@ public class InfluenceMax_list extends InfluenceMax{
             }
         }
 
+        infl_max = I.get(max_node).size() * n/sketch_num;
         total_infl = set_infl + infl_max;
 
         System.out.println("Max Node = " + max_node + ", Its Influence = " + infl_max);
@@ -92,10 +93,10 @@ public class InfluenceMax_list extends InfluenceMax{
                 I.get(u).removeAll(nodes_in_max_node);
         }
         I.get(max_node).clear();
-        
+
         get_seeds(I, k-1, sketch_num, total_infl);
     }
-	
-		
+
+
 
 }
