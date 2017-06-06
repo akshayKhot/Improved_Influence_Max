@@ -9,9 +9,13 @@ import java.util.concurrent.*;
 public class InfluenceMax_parallel extends InfluenceMax {
 
     private int numOfProcessors;
+    List<List<Integer>> I;
 
     public InfluenceMax_parallel(String basename, int beta) throws Exception {
         super(basename, beta);
+        I = new ArrayList<>();
+        for(int j=0;j<n;j++)
+            I.add(new ArrayList<>());
         get_sketch();
     }
 
@@ -22,13 +26,9 @@ public class InfluenceMax_parallel extends InfluenceMax {
         private int sketch_num;
         private int index;
         private BitSet influenced_nodes;
-        private List<List<Integer>> I;
 
         public ParallelTask() {
             this.influenced_nodes = new BitSet(n);
-            I = new ArrayList<>();
-            for(int j=0;j<n;j++)
-                I.add(new ArrayList<>());
         }
 
         @Override
@@ -65,27 +65,23 @@ public class InfluenceMax_parallel extends InfluenceMax {
 
         List<Future> futureList = new ArrayList<>();
         numOfProcessors = Runtime.getRuntime().availableProcessors();
-        ExecutorService executorService = Executors.newFixedThreadPool(numOfProcessors);
+        ExecutorService executorService = Executors.newFixedThreadPool(20);
 
         for(int i=0; i<4; i++)
             futureList.add(executorService.submit(new ParallelTask()));
 
         ArrayList<SketchData> sketch_objects = new ArrayList<>();
+        int index = 0, sketch_num = 0;
         for(Future future : futureList) {
             try {
                 SketchData sk = (SketchData) future.get();
                 sketch_objects.add(sk);
+                index += sk.getIndex();
+                sketch_num += sk.getSketch_num();
             } catch (InterruptedException e) {}
             catch (ExecutionException e) {}
         }
 
-
-        int index = 0, sketch_num = 0;
-        List<List<Integer>> I = new ArrayList<>();
-        for(SketchData sk : sketch_objects) {
-            index += sk.getIndex();
-            sketch_num += sk.getSketch_num();
-        }
 
         long sketchEndTime = System.currentTimeMillis() - sketchStartTime;
 
@@ -95,12 +91,12 @@ public class InfluenceMax_parallel extends InfluenceMax {
 
         int set_infl = 0;
 
-//        long seedStartTime = System.currentTimeMillis();
-//        get_seeds(I, k, sketch_num, set_infl);
-//        long seedEndTime = System.currentTimeMillis() - seedStartTime;
-//
-//        System.out.println("\tTime taken to get sketches: " + sketchEndTime/1000.0 + " seconds");
-//        System.out.println("\tTime taken to compute seeds: " + seedEndTime/1000.0 + " seconds");
+        long seedStartTime = System.currentTimeMillis();
+        get_seeds(I, k, sketch_num, set_infl);
+        long seedEndTime = System.currentTimeMillis() - seedStartTime;
+
+        System.out.println("\tTime taken to get sketches: " + sketchEndTime/1000.0 + " seconds");
+        System.out.println("\tTime taken to compute seeds: " + seedEndTime/1000.0 + " seconds");
     }
 
     void get_seeds(List<List<Integer>> I, int k, int sketch_num, int set_infl) {
