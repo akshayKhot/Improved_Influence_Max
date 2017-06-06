@@ -4,7 +4,7 @@ public class Main {
     public static void main(String args[]) throws Exception {
 
         long startTime1, startTime2, startTime3, estimatedTime1, estimatedTime2, estimatedTime3;
-        int[] betas = {32};
+        int[] betas = {4};
 
         String graphName = "cnr-2000-t";
 
@@ -15,15 +15,15 @@ public class Main {
             System.out.println("Time taken by Parallel implementation: " + estimatedTime3 / 1000.0 + " seconds");
         }
 
-        System.out.println("------------------------------------------------------------------");
-
-
-        for(int b : betas) {
-            startTime1 = System.currentTimeMillis();
-            new InfluenceMax_list(graphName, b);
-            estimatedTime1 = System.currentTimeMillis() - startTime1;
-            System.out.println("Time taken by List implementation: " + estimatedTime1 / 1000.0 + " seconds");
-        }
+//        System.out.println("------------------------------------------------------------------");
+//
+//
+//        for(int b : betas) {
+//            startTime1 = System.currentTimeMillis();
+//            new InfluenceMax_list(graphName, b);
+//            estimatedTime1 = System.currentTimeMillis() - startTime1;
+//            System.out.println("Time taken by List implementation: " + estimatedTime1 / 1000.0 + " seconds");
+//        }
 
         System.out.println("------------------------------------------------------------------");
 

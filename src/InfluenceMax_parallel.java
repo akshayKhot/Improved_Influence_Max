@@ -1,4 +1,3 @@
-import org.omg.SendingContext.RunTime;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -53,7 +52,7 @@ public class InfluenceMax_parallel extends InfluenceMax {
                 sketch_num++;
             }
 
-            return new SketchData(sketch_num, I, index);
+            return new SketchData(sketch_num, index);
         }
     }
 
@@ -65,22 +64,24 @@ public class InfluenceMax_parallel extends InfluenceMax {
 
         List<Future> futureList = new ArrayList<>();
         numOfProcessors = Runtime.getRuntime().availableProcessors();
-        ExecutorService executorService = Executors.newFixedThreadPool(20);
+        ExecutorService executorService = Executors.newFixedThreadPool(numOfProcessors);
+        CompletionService<SketchData> completionService = new ExecutorCompletionService<>(executorService);
 
-        for(int i=0; i<4; i++)
-            futureList.add(executorService.submit(new ParallelTask()));
+        for(int i=0; i<numOfProcessors; i++)
+            //futureList.add(executorService.submit(new ParallelTask()));
+            completionService.submit(new ParallelTask());
 
-        ArrayList<SketchData> sketch_objects = new ArrayList<>();
         int index = 0, sketch_num = 0;
-        for(Future future : futureList) {
+        for(int i=0; i<numOfProcessors; i++)
             try {
-                SketchData sk = (SketchData) future.get();
-                sketch_objects.add(sk);
+                SketchData sk = completionService.take().get();
                 index += sk.getIndex();
                 sketch_num += sk.getSketch_num();
-            } catch (InterruptedException e) {}
-            catch (ExecutionException e) {}
-        }
+            } catch (InterruptedException e) {
+                System.out.println("Exception: " + e.getMessage());
+            } catch (ExecutionException e) {
+                System.out.println("Exception: " + e.getMessage());
+            }
 
 
         long sketchEndTime = System.currentTimeMillis() - sketchStartTime;
@@ -118,7 +119,12 @@ public class InfluenceMax_parallel extends InfluenceMax {
             }
         }
 
-        infl_max = I.get(max_node).size() * n/sketch_num;
+        try {
+            infl_max = I.get(max_node).size() * n / sketch_num;
+        } catch (ArithmeticException e) {
+            System.out.println("Division by 0");
+            System.exit(0);
+        }
         total_infl = set_infl + infl_max;
 
         System.out.println("Max Node = " + max_node + ", Its Influence = " + infl_max);
