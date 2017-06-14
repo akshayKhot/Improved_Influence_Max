@@ -17,15 +17,14 @@ public class InfluenceMax {
     BitSet marked;
 
 
-    public InfluenceMax(String basename, int beta) throws Exception {
+    public InfluenceMax(String basename, int beta, int index) throws Exception {
 
         G = ImmutableGraph.load("sym-noself/" + basename);
         n = G.numNodes();
         m = G.numArcs();
         W = beta * (n + m) * Math.log(n);
 
-        System.out.println("n = "+ n + ", m = " + m);
-        System.out.println("Beta=" + beta + " k=" + k + " p=" + p + "\n");
+        System.out.println("(" + index + ") Beta = " + beta + ", n="+ n + ", m=" + m + ", k=" + k + ", p=" + p + "\n");
 
         marked = new BitSet(n);
         permutation = new int[n];

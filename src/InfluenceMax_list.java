@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class InfluenceMax_list extends InfluenceMax{
 
-	public InfluenceMax_list(String basename, int beta) throws Exception {
-        super(basename, beta);
+	public InfluenceMax_list(String basename, int beta, int index) throws Exception {
+        super(basename, beta, index);
         get_sketch();
 	}
 

@@ -9,8 +9,8 @@ public class InfluenceMax_flat extends InfluenceMax {
 
     int count_sketches;
 
-	public InfluenceMax_flat(String basename, int beta) throws Exception {
-		super(basename, beta);
+	public InfluenceMax_flat(String basename, int beta, int index) throws Exception {
+		super(basename, beta, index);
 
 		sketches = new int[nMAX];
         nodes = new int[nMAX];
