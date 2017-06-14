@@ -57,9 +57,7 @@ public class InfluenceMax_flat extends InfluenceMax {
             count_sketches += marked.cardinality();
 	    }
 
-	    System.out.println("Index: " + index +
-                           ", Number of Sketches: " + sketch_num +
-                           ", Size of array iSketch: " + count_sketches);
+        System.out.println("Number of Sketches: " + sketch_num);
 
         // Cutting off the tails of sketches and nodes arrays, making the arrays shorter
         int[] iSketch = new int[count_sketches + 1];
@@ -78,8 +76,8 @@ public class InfluenceMax_flat extends InfluenceMax {
         get_seeds(iSketch, iNode, node_infl, k, count_sketches, sketch_num, set_infl);
         long seedEndTime = System.currentTimeMillis() - seedStartTime;
 
-        System.out.println("\tTime taken to get sketches: " + sketchEndTime/1000.0 + " seconds");
-        System.out.println("\tTime taken to compute seeds: " + seedEndTime/1000.0 + " seconds");
+        System.out.println("Time taken to get sketches: " + sketchEndTime/1000.0 + " seconds");
+        System.out.println("Time taken to compute seeds: " + seedEndTime/1000.0 + " seconds");
 	}
 
     void get_seeds(int[] sketch_I, int[] node_I, int[] node_infl, int k, int count_sketches, int sketch_num, int set_infl) {
@@ -106,7 +104,7 @@ public class InfluenceMax_flat extends InfluenceMax {
         infl_max = node_infl[max_node] * n / sketch_num;
         total_infl = set_infl + infl_max;
 
-        System.out.println("Max Node = " + max_node + ", Its Influence = " + infl_max);
+        //System.out.println("Max Node = " + max_node + ", Its Influence = " + infl_max);
 
         if((k - 1)==0) {
             System.out.println("Total Influence of " + this.k + " nodes = " + total_infl + "\n");

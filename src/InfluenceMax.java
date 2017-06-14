@@ -24,7 +24,7 @@ public class InfluenceMax {
         m = G.numArcs();
         W = beta * (n + m) * Math.log(n);
 
-        System.out.println("\nG = " + basename + "\nn = "+ n + ", m = " + m);
+        System.out.println("n = "+ n + ", m = " + m);
         System.out.println("Beta=" + beta + " k=" + k + " p=" + p + "\n");
 
         marked = new BitSet(n);
