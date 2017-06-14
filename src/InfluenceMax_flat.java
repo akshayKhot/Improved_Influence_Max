@@ -9,8 +9,8 @@ public class InfluenceMax_flat extends InfluenceMax {
 
     int count_sketches;
 
-	public InfluenceMax_flat(String basename, int beta, int index) throws Exception {
-		super(basename, beta, index);
+	public InfluenceMax_flat(String basename, int beta) throws Exception {
+		super(basename, beta);
 
 		sketches = new int[nMAX];
         nodes = new int[nMAX];
@@ -76,8 +76,8 @@ public class InfluenceMax_flat extends InfluenceMax {
         get_seeds(iSketch, iNode, node_infl, k, count_sketches, sketch_num, set_infl);
         long seedEndTime = System.currentTimeMillis() - seedStartTime;
 
-        System.out.println("Time taken to get sketches: " + sketchEndTime/1000.0 + " seconds");
-        System.out.println("Time taken to compute seeds: " + seedEndTime/1000.0 + " seconds");
+        System.out.println("Compute_Sketches: " + sketchEndTime/1000.0 + " seconds");
+        System.out.println("Compute_Seeds: " + seedEndTime/1000.0 + " seconds");
 	}
 
     void get_seeds(int[] sketch_I, int[] node_I, int[] node_infl, int k, int count_sketches, int sketch_num, int set_infl) {

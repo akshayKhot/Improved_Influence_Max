@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class InfluenceMax_list extends InfluenceMax{
 
-	public InfluenceMax_list(String basename, int beta, int index) throws Exception {
-        super(basename, beta, index);
+	public InfluenceMax_list(String basename, int beta) throws Exception {
+        super(basename, beta);
         get_sketch();
 	}
 
@@ -52,8 +52,8 @@ public class InfluenceMax_list extends InfluenceMax{
         get_seeds(I, k, sketch_num, set_infl);
         long seedEndTime = System.currentTimeMillis() - seedStartTime;
 
-        System.out.println("Time taken to get sketches: " + sketchEndTime/1000.0 + " seconds");
-        System.out.println("Time taken to compute seeds: " + seedEndTime/1000.0 + " seconds");
+        System.out.println("Compute_Sketches: " + sketchEndTime/1000.0 + " seconds");
+        System.out.println("Compute_Seeds: " + seedEndTime/1000.0 + " seconds");
 	}
 
     void get_seeds(List<List<Integer>> I, int k, int sketch_num, int set_infl) {
