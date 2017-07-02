@@ -4,7 +4,7 @@ public class Main {
     public static void main(String args[]) throws Exception {
 
         long startTime1, startTime2, estimatedTime1, estimatedTime2;
-        int[] betas = {2, 4};
+        int[] betas = {2};
 
         String graphName = "cnr-2000-t";
         System.out.println("\nG = " + graphName);

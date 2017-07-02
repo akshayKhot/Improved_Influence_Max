@@ -104,7 +104,7 @@ public class InfluenceMax_flat extends InfluenceMax {
         infl_max = node_infl[max_node] * n / sketch_num;
         total_infl = set_infl + infl_max;
 
-        //System.out.println("Max Node = " + max_node + ", Its Influence = " + infl_max);
+        System.out.println("Max Node = " + max_node + ", Its Influence = " + infl_max);
 
         if((k - 1)==0) {
             System.out.println("Total Influence of " + this.k + " nodes = " + total_infl + "\n");
