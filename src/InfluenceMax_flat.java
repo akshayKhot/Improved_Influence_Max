@@ -80,7 +80,7 @@ public class InfluenceMax_flat extends InfluenceMax {
         System.out.println("Compute_Seeds: " + seedEndTime/1000.0 + " seconds");
 	}
 
-    void get_seeds(int[] sketch_I, int[] node_I, int[] node_infl, int k, int count_sketches, int sketch_num, int set_infl) {
+    void get_seeds(int[] sketches, int[] nodes, int[] node_infl, int k, int count_sketches, int sketch_num, int set_infl) {
 
         int infl_max = 0;
         int max_node = 0;
@@ -115,40 +115,40 @@ public class InfluenceMax_flat extends InfluenceMax {
         // plus re-calculate the influence
         for(int j=0;j<count_sketches;j++)
         {
-            if(node_I[j] == -1)
+            if(nodes[j] == -1)
                 continue;
             else
             {
-                if(node_I[j] == max_node)
+                if(nodes[j] == max_node)
                 {
-                    int redundant_sketch = sketch_I[j];
+                    int redundant_sketch = sketches[j];
 
                 // As sketches are added to the array in numerical order, the same redundant sketch can be found before and after the max node
                     int l = j+1;
-                    while(sketch_I[l] == redundant_sketch) {
-                        node_infl[node_I[l]] = node_infl[node_I[l]] - 1;
-                        sketch_I[l] = -1;
-                        node_I[l] = -1;
+                    while(sketches[l] == redundant_sketch) {
+                        node_infl[nodes[l]] = node_infl[nodes[l]] - 1;
+                        sketches[l] = -1;
+                        nodes[l] = -1;
                         l++;
                     }
-                    if(j>0) // (j!=0) Boundary of the arrays sketch_I and node_I
+                    if(j>0) // (j!=0) Boundary of the arrays sketches and nodes
                     {
                         int ll = j-1;
-                        while(sketch_I[ll] == redundant_sketch) {
-                            node_infl[node_I[ll]] = node_infl[node_I[ll]] - 1;
-                            sketch_I[ll] = -1;
-                            node_I[ll] = -1;
+                        while(sketches[ll] == redundant_sketch) {
+                            node_infl[nodes[ll]] = node_infl[nodes[ll]] - 1;
+                            sketches[ll] = -1;
+                            nodes[ll] = -1;
                             ll--;
                         }
                     }
-                    sketch_I[j] = -1;
-                    node_I[j] = -1;
+                    sketches[j] = -1;
+                    nodes[j] = -1;
                 }
             }
         }
         node_infl[max_node] = 0;
 
-        get_seeds(sketch_I, node_I, node_infl, k-1, count_sketches, sketch_num, total_infl);
+        get_seeds(sketches, nodes, node_infl, k-1, count_sketches, sketch_num, total_infl);
     }
 
 
